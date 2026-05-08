@@ -19,6 +19,7 @@ import { CustomAlertDialog } from "@/customalert/alertDialog";
 import AnimatedTitle from "@/animate/animatedTitle";
 import { useAuth } from "@/context/authContext";
 
+
 const FormSchema = z.object({
   email: z.string().email({ message: "Correo inválido" }),
   password: z.string().min(6, { message: "Mínimo 6 caracteres" }),
@@ -46,42 +47,63 @@ export default function LoginPage() {
     },
   });
 
-  const onSubmit = async (data: z.infer<typeof FormSchema>) => {
-    setLoading(true);
-    setEmail(inputEmail);
-    try {
-      const res = await fetch(`${apiUrl}/auth/login`, {
+  const onSubmit = async (
+  data: z.infer<typeof FormSchema>
+) => {
+  setLoading(true);
+
+  setEmail(inputEmail);
+
+  try {
+    const res = await fetch(
+      `${apiUrl}/auth/login`,
+      {
         method: "POST",
+
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type":
+            "application/json",
         },
+
         body: JSON.stringify({
-          identifier: data.email,
+          email: data.email,
           password: data.password,
         }),
-      });
-
-      const result = await res.json();
-
-      console.log("***** ")
-
-      console.log("response ", result)
-
-      console.log("***** ")
-
-      if (result.error && result.error.status === 400) {
-        setOpen(true);
-        setLoading(false);
-        return;
-      } else {
-        localStorage.setItem("token", result.jwt);
-        router.push("/dashboard");
       }
-    } catch (error) {
+    );
+
+    const result = await res.json();
+
+    if (
+      result.error &&
+      result.error.status === 400
+    ) {
+      setOpen(true);
+
       setLoading(false);
-      toast.error("Ocurrió un error inesperado ❌ " + error);
+
+      return;
     }
-  };
+
+    // useAuthStore.getState().setAuth({
+    //   token: result.token,
+
+    //   role: result.role,
+
+    //   tenantId: result.tenant_id,
+
+    //   user: result.user,
+    // });
+
+    router.push("/dashboard");
+  } catch (error) {
+    setLoading(false);
+
+    toast.error(
+      "Ocurrió un error inesperado ❌"
+    );
+  }
+};
 
   return (
     <div className="relative min-h-screen flex items-center justify-center p-4 overflow-hidden bg-slate-950">

@@ -28,7 +28,7 @@ const FormSchema = z.object({
 export default function LoginPage() {
   const { setEmail } = useAuth();
   const router = useRouter();
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
 
   useEffect(() => {
     localStorage.clear();
@@ -42,68 +42,56 @@ export default function LoginPage() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      email: "admin@system.local",
+      password: "Deno88*.",
     },
   });
 
   const onSubmit = async (
-  data: z.infer<typeof FormSchema>
-) => {
-  setLoading(true);
+    data: z.infer<typeof FormSchema>
+  ) => {
+    setLoading(true);
 
-  setEmail(inputEmail);
+    setEmail(inputEmail);
 
-  try {
-    const res = await fetch(
-      `${apiUrl}/auth/login`,
-      {
-        method: "POST",
+    try {
+      const res = await fetch(
+        `/api/auth/login`, 
+        {
+          method: "POST",
 
-        headers: {
-          "Content-Type":
-            "application/json",
-        },
+          headers: {
+            "Content-Type":
+              "application/json",
+          },
 
-        body: JSON.stringify({
-          email: data.email,
-          password: data.password,
-        }),
+          body: JSON.stringify({
+            email: data.email,
+            password: data.password,
+          }),
+        }
+      );
+      const result = await res.json();
+      if (
+        result.error &&
+        result.error.status === 400
+      ) {
+        setOpen(true);
+
+        setLoading(false);
+
+        return;
       }
-    );
 
-    const result = await res.json();
-
-    if (
-      result.error &&
-      result.error.status === 400
-    ) {
-      setOpen(true);
-
+      router.push("/dashboard");
+    } catch (error) {
       setLoading(false);
 
-      return;
+      toast.error(
+        "Ocurrió un error inesperado ❌"
+      );
     }
-
-    // useAuthStore.getState().setAuth({
-    //   token: result.token,
-
-    //   role: result.role,
-
-    //   tenantId: result.tenant_id,
-
-    //   user: result.user,
-    // });
-
-    router.push("/dashboard");
-  } catch (error) {
-    setLoading(false);
-
-    toast.error(
-      "Ocurrió un error inesperado ❌"
-    );
-  }
-};
+  };
 
   return (
     <div className="relative min-h-screen flex items-center justify-center p-4 overflow-hidden bg-slate-950">

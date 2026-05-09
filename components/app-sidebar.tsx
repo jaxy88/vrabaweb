@@ -4,19 +4,21 @@ import * as React from "react";
 import {
   IconCamera,
   IconChartBar,
-  IconDashboard,
-  IconDatabase,
+  IconCash,
+  IconSlideshow,
   IconFileAi,
+  IconBrandPaypal,
   IconFileDescription,
   IconFileWord,
   IconFolder,
   IconHelp,
   IconInnerShadowTop,
-  IconListDetails,
+  IconUser,
   IconReport,
   IconSearch,
   IconSettings,
   IconUsers,
+  IconWebhook,
 } from "@tabler/icons-react";
 
 import { NavDocuments } from "@/components/nav-documents";
@@ -41,30 +43,30 @@ const data = {
   },
   navMain: [
     {
-      title: "Dashboard",
+      title: "Payments",
       url: "#",
-      icon: IconDashboard,
+      icon: IconBrandPaypal,
     },
     {
-      title: "Lifecycle",
-      url: "#",
-      icon: IconListDetails,
+      title: "Clients",
+      url: "/clients",
+      icon: IconUser,
     },
-    {
-      title: "Analytics",
-      url: "#",
-      icon: IconChartBar,
-    },
-    {
-      title: "Projects",
-      url: "#",
-      icon: IconFolder,
-    },
-    {
-      title: "Team",
-      url: "#",
-      icon: IconUsers,
-    },
+    // {
+    //   title: "Analytics",
+    //   url: "#",
+    //   icon: IconChartBar,
+    // },
+    // {
+    //   title: "Projects",
+    //   url: "#",
+    //   icon: IconFolder,
+    // },
+    // {
+    //   title: "Team",
+    //   url: "#",
+    //   icon: IconUsers,
+    // },
   ],
   navClouds: [
     {
@@ -120,11 +122,11 @@ const data = {
       url: "#",
       icon: IconSettings,
     },
-    {
-      title: "Get Help",
-      url: "#",
-      icon: IconHelp,
-    },
+    // {
+    //   title: "Get Help",
+    //   url: "#",
+    //   icon: IconHelp,
+    // },
     {
       title: "Search",
       url: "#",
@@ -133,20 +135,20 @@ const data = {
   ],
   documents: [
     {
-      name: "Data Library",
+      name: "Card slider",
       url: "#",
-      icon: IconDatabase,
+      icon: IconSlideshow,
     },
     {
-      name: "Reports",
+      name: "Princing",
       url: "#",
-      icon: IconReport,
+      icon: IconCash,
     },
-    {
-      name: "Word Assistant",
-      url: "#",
-      icon: IconFileWord,
-    },
+    // {
+    //   name: "Word Assistant",
+    //   url: "#",
+    //   icon: IconFileWord,
+    // },
   ],
 };
 
@@ -161,8 +163,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               className="data-[slot=sidebar-menu-button]:!p-1.5"
             >
               <a href="#">
-                <IconInnerShadowTop className="!size-5" />
-                <span className="text-base font-semibold">ashboard</span>
+                <IconWebhook className="!size-5" />
+                <span className="">Web Master</span>
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>

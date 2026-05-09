@@ -101,7 +101,7 @@ export default function MenuSuperior() {
                     Zoey Hughes
                   </p>
                   <p className="text-xs leading-none text-muted-foreground">
-                    zoey@example.com
+                    nxy@webmaster.com
                   </p>
                 </div>
               </DropdownMenuLabel>

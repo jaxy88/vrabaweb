@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import { getSession } from "./session";
 
 export async function backendFetch(
-  url: string,
+  endpoint: string,
 
   options: RequestInit = {}
 ) {
@@ -29,20 +29,27 @@ export async function backendFetch(
     );
   }
 
+  const headers =
+    new Headers(
+      options.headers
+    );
+
+  headers.set(
+    "Content-Type",
+    "application/json"
+  );
+
+  headers.set(
+    "Authorization",
+    `Bearer ${session.token}`
+  );
+
   return fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}${url}`,
+    `${process.env.API_URL}${endpoint}`,
     {
       ...options,
 
-      headers: {
-        "Content-Type":
-          "application/json",
-
-        ...options.headers,
-
-        Authorization:
-          `Bearer ${session.token}`,
-      },
+      headers,
     }
   );
 }
